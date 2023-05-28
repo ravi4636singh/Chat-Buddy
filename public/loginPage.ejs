@@ -100,7 +100,9 @@
 			let userInfo = localStorage.getItem('userInfo');
 
 			if (userInfo) {
-				fetch(`http://localhost:8080/login/${userInfo}`).then(() => {
+				fetch(
+					`https://gupshup-room.onrender.com/login/${userInfo}`
+				).then(() => {
 					location.pathname = 'chat';
 				});
 			}
