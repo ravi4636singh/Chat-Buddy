@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			.login-section {
+				width: 100%;
+				height: 100vh;
+				background-color: #caf0f8;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.heading {
+				color: #03045e;
+				font-size: 1.5rem;
+				margin-bottom: 2rem;
+				font-family: 'Roboto';
+			}
+
+			.form {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				gap: 1rem;
+				background-color: #00b4d8;
+				padding: 1rem 1.5rem;
+				border-radius: 4px;
+			}
+
+			.username-label {
+				color: #03045e;
+				font-size: 1.3rem;
+				font-weight: bold;
+				font-family: 'Roboto';
+				letter-spacing: 0.02rem;
+			}
+
+			.username {
+				font-size: 1.2rem;
+				padding: 0.8rem 0.5rem;
+				border-radius: 4px;
+				outline: none;
+				border: none;
+				font-family: 'Roboto';
+			}
+
+			.join-chat-btn {
+				font-size: 1rem;
+				padding: 0.6rem 0;
+				width: 100%;
+				border-radius: 4px;
+				cursor: pointer;
+				background-color: #90e0ef;
+				color: #03045e;
+				border: 3px solid #03045e;
+				font-family: 'Roboto';
+				font-weight: bold;
+				transition: all 0.3s ease-in-out;
+			}
+			.join-chat-btn:hover {
+				background-color: #03045e;
+				color: #caf0f8;
+				font-weight: normal;
+			}
+		</style>
+		<title>Chat Buddy - Login</title>
+	</head>
+	<body>
+		<section class="login-section">
+			<h1 class="heading">Just Enter Name & Join Global Chat</h1>
+			<form class="form">
+				<label for="username" class="username-label">Full Name</label>
+				<input
+					type="text"
+					placeholder="Enter Full Name..."
+					id="username"
+					class="username"
+				/>
+				<input type="submit" value="Join Chat" class="join-chat-btn" />
+			</form>
+		</section>
+
+		<script>
+			const form = document.querySelector('.form');
+			const username = document.querySelector('#username');
+			let userInfo = localStorage.getItem('userInfo');
+
+			if (userInfo) {
+				fetch(`http://localhost:8080/login/${userInfo}`).then(() => {
+					location.pathname = 'chat';
+				});
+			}
+
+			form.addEventListener('submit', (e) => {
+				userInfo = localStorage.setItem('userInfo', username.value);
+				location.pathname = 'chat';
+			});
+		</script>
+	</body>
+</html>

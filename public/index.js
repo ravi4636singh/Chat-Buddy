@@ -1,110 +1,96 @@
-const socket = io()
-const joinSection = document.querySelector('.join-section')
-const chatSection = document.querySelector('.chat-section')
-const username = document.querySelector('#username')
-const joinBtn = document.querySelector('.join-btn')
-const exitBtn = document.querySelector('.exit-btn')
-const form = document.querySelector('.form-input')
-const message = document.querySelector('.message')
-const mainDiv = document.querySelector('.msg-wrapper')
+const socket = io();
+const userInfo = localStorage.getItem('userInfo');
+const user = document.querySelector('.user-info span');
+const liveUsersCounts = document.querySelector('#live_users');
+const onlineUsers = document.querySelector('.online-users');
+const form = document.querySelector('#form');
+const message = document.querySelector('#message');
+const mainContainer = document.querySelector('.msg-container');
+const logoutBtn = document.querySelectorAll('.logout-btn');
 
-let uname
+user.textContent = userInfo;
 
-joinBtn.addEventListener('click', () => {
-    uname = username.value
+let count = 0;
 
-    if(uname){
-        joinSection.classList.add('active')
-        chatSection.classList.remove('active')
-        
-        socket.emit('join user', uname)
-    }else{
-        alert('Please! Enter Username')
-    }
-})
+const createUserEle = (name, color, status) => {
+	const div = document.createElement('div');
+	div.classList.add('update-user');
+	div.style.backgroundColor = color;
+	div.textContent = `${name} ${status} the conversation`;
+	mainContainer.appendChild(div);
+};
 
-const msgRenders = (msgType, msgInfo) => {
-    const div = document.createElement('div')
-    div.classList.add(msgType)
+// Join User Logic
+userInfo && socket.emit('join', userInfo);
 
-    const innerDiv = document.createElement('div')
+socket.on('connected', (username) => {
+	createUserEle(username, '#03045e', 'Join');
+	count++;
+	liveUsersCounts.textContent = `Live : ${count}`;
+	let onlineUsersEle = document.createElement('div');
+	onlineUsersEle.classList.add('show-online-user');
+	onlineUsersEle.textContent = username;
+	onlineUsers.appendChild(onlineUsersEle);
+});
 
-    const span = document.createElement('span')
-    span.textContent = msgInfo.username
-    
-    const hr = document.createElement('hr')
-    
-    const p = document.createElement('p')
-    p.textContent = msgInfo.message
+// Exit User Logic
+logoutBtn.forEach((btn) => {
+	btn.addEventListener('click', () => {
+		socket.emit('exit', userInfo);
+		localStorage.removeItem('userInfo');
+		location.pathname = '/';
+	});
+});
 
-    if(msgType === 'outgoing'){
-        innerDiv.classList.add('sender')
-        span.classList.add('sender-name')
-        p.classList.add('sender-msg')
-    }else if(msgType === 'incoming'){
-        innerDiv.classList.add('receiver')
-        span.classList.add('receiver-name')
-        p.classList.add('receiver-msg')
-    }
+socket.on('disconnected', (username) => {
+	createUserEle(username, 'red', 'Left');
+	count--;
+	liveUsersCounts.textContent = `Live : ${count}`;
+	onlineUsers.removeChild();
+});
 
-    innerDiv.appendChild(span)
-    innerDiv.appendChild(hr)
-    innerDiv.appendChild(p)
-    div.appendChild(innerDiv)
-    mainDiv.appendChild(div)
-}
+// Rendering message's
+const createMsgEle = (msgType, msgInfo) => {
+	const div = document.createElement('div');
+	div.classList.add(msgType);
 
-// Outgoing Messages
+	let senderMsgEle = `<div class="sender">
+							<p
+								class="sender-msg"
+								style="font-size: 1rem; word-break: break-all"
+							>
+								${msgInfo.userMsg}
+							</p>
+						</div>`;
+
+	let receiverMsgEle = `<div class="receiver">
+							<span class="receiver-name">${msgInfo.username}</span>
+							<p
+								class="receiver-msg"
+								style="font-size: 1rem; word-break: break-all"
+							>
+								${msgInfo.userMsg}
+							</p>
+						</div>`;
+
+	div.innerHTML = msgType === 'outgoing-msg' ? senderMsgEle : receiverMsgEle;
+	mainContainer.appendChild(div);
+};
+
 form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    let msg = message.value
+	e.preventDefault();
 
-    if(msg){
-        let msgInfo = {
-            username: uname,
-            message: msg
-        }
-        msgRenders('outgoing', msgInfo)
-        socket.emit('new message', msgInfo)
-        message.value = ''
-    }else{
-        alert('Write Something...')
-    }
-})
+	let msgInfo = {
+		username: userInfo,
+		userMsg: message.value,
+	};
 
-// Incoming Messages
-socket.on('new message', (msgInfo) => {
-    msgRenders('incoming', msgInfo)
-})
+	socket.emit('message', msgInfo);
+	createMsgEle('outgoing-msg', msgInfo);
 
-// Join User
-const joinUser = (name) => {
-    const div = document.createElement('div')
-    div.classList.add('user-update')
-    div.textContent = `${name} join this conversation`
-    mainDiv.appendChild(div)
-}
+	message.value = '';
+});
 
-socket.on('connected', (uname) => {
-    joinUser(uname)
-})
-
-// Exit User
-exitBtn.addEventListener('click', () => {
-    socket.emit('exit user', uname)
-    joinSection.classList.remove('active')
-    chatSection.classList.add('active')
-})
-
-const exitUser = (name) => {
-    const div = document.createElement('div')
-    div.classList.add('user-update')
-    div.style.backgroundColor = 'red'
-    div.style.color = 'white'
-    div.textContent = `${name} left this conversation`
-    mainDiv.appendChild(div)
-}
-
-socket.on('disconnected', (uname) => {
-    exitUser(uname)
-})
+socket.on('message', (msgInfo) => {
+	createMsgEle('incoming-msg', msgInfo);
+});

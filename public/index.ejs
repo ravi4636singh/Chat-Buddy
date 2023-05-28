@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Chat App</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header class="header">
+			<h1 class="logo">Chat Buddy</h1>
+		</header>
+
+		<section class="chat-section">
+			<div class="chat-name">
+				<div class="user-info">
+					<span></span>
+					<button type="submit" class="logout-btn" id="logout">
+						Logout
+					</button>
+				</div>
+
+				<span
+					style="display: block; color: #03045e; margin: 0.5rem 1rem"
+					id="live_users"
+				></span>
+
+				<div class="online-users">
+					<!-- <div class="show-online-user">Chat 1</div> -->
+				</div>
+			</div>
+
+			<div class="chat-area">
+				<h3 class="others-username">Global Chat</h3>
+
+				<div class="user-info">
+					<span>Ravi</span>
+					<button type="submit" class="logout-btn" id="logout">
+						Logout
+					</button>
+				</div>
+
+				<div class="msg-container">
+					<!-- <div class="outgoing-msg">
+						<div class="sender">
+							<span class="sender-name">Sender Name</span>
+							<p
+								class="sender-msg"
+								style="font-size: 1rem; word-break: break-all"
+							>
+								Message...
+							</p>
+						</div>
+					</div> -->
+
+					<!-- <div class="update-user">Name Join the conversation</div> -->
+
+					<!-- <div class="incoming-msg">
+						<div class="receiver">
+							<span class="receiver-name">Receiver Name</span>
+							<p
+								class="receiver-msg"
+								style="font-size: 1rem; word-break: break-all"
+							>
+								Message...
+							</p>
+						</div>
+					</div> -->
+				</div>
+
+				<form class="form" id="form">
+					<input
+						type="text"
+						class="message"
+						id="message"
+						placeholder="Write Message..."
+						required
+					/>
+					<input type="submit" value="Send" class="msg-send-btn" />
+				</form>
+			</div>
+		</section>
+
+		<script src="socket.io/socket.io.js"></script>
+		<script src="index.js"></script>
+	</body>
+</html>

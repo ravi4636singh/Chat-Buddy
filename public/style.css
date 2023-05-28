@@ -1,229 +1,294 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
 }
 
-html {
-  font-size: 62.5%;
+body {
+	background-color: #caf0f8;
 }
 
-.join-section {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #3e4452;
-  border-radius: 10px;
-  padding: 1.5rem 2rem;
+.header {
+	padding: 0.6rem 0;
+	background-color: #00b4d8;
+	color: #03045e;
 }
-.join-section h1 {
-  font-size: 2.5rem;
-  text-align: center;
-  color: white;
-  margin-bottom: 2rem;
-  position: relative;
-}
-.join-section h1::after {
-  position: absolute;
-  content: "";
-  width: 50%;
-  height: 3px;
-  background-color: #3effd8;
-  left: 50%;
-  bottom: -30%;
-  transform: translateX(-50%);
-  border-radius: 10px;
-}
-.join-section label {
-  font-size: 2rem;
-  color: white;
-  margin-bottom: 0.2rem;
-  letter-spacing: 0.1rem;
-}
-.join-section .username {
-  border: none;
-  outline: none;
-  font-size: 2rem;
-  padding: 0.8rem;
-  border-radius: 5px;
-  margin-bottom: 2rem;
-}
-.join-section .join-btn {
-  font-size: 1.8rem;
-  padding: 0.8rem 0;
-  border: 2px solid white;
-  border-radius: 10px;
-  background-color: #21252c;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-.join-section .join-btn:hover {
-  border: 2px solid #21252c;
-  background-color: white;
-  color: #21252c;
-  font-weight: bold;
+
+.header .logo {
+	font-size: 1.1rem;
+	text-align: center;
+	width: 100%;
+	display: block;
 }
 
 .chat-section {
-  width: 40%;
-  height: 100vh;
-  margin: 0 auto;
-  border-left: 2px solid gray;
-  border-right: 2px solid gray;
-  background-color: #3e4452;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 8% 85% 7%;
-}
-.chat-section .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem;
-  background-color: #21252c;
-}
-.chat-section .header .logo {
-  font-size: 2.5rem;
-  color: white;
-  letter-spacing: 0.1rem;
-}
-.chat-section .header .exit-btn {
-  font-weight: bold;
-  font-size: 1.4rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  padding: 0.4rem 1rem;
-  border: 2px solid red;
-  background-color: red;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-.chat-section .header .exit-btn:hover {
-  background-color: transparent;
-  color: red;
-}
-.chat-section .msg-wrapper {
-  color: white;
-  overflow-y: auto;
-}
-.chat-section .msg-wrapper .outgoing {
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  margin-top: 1rem;
-}
-.chat-section .msg-wrapper .outgoing .sender {
-  background-color: rgb(59, 87, 59);
-  padding: 0.4rem 0.6rem;
-  max-width: 75%;
-  border-radius: 5px 0px 0px 5px;
-}
-.chat-section .msg-wrapper .outgoing .sender .sender-name {
-  font-size: 1.3rem;
-  word-break: break-all;
-}
-.chat-section .msg-wrapper .outgoing .sender .sender-msg {
-  font-size: 1.6rem;
-  word-break: break-all;
-}
-.chat-section .msg-wrapper .user-update {
-  font-style: italic;
-  font-size: 1.5rem;
-  text-align: center;
-  width: -moz-max-content;
-  width: max-content;
-  margin: 0.6rem auto;
-  padding: 0.3rem 1.2rem;
-  background-color: #3effd8;
-  color: black;
-  border-radius: 10px;
-}
-.chat-section .msg-wrapper .incoming {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  margin-top: 1rem;
-}
-.chat-section .msg-wrapper .incoming .receiver {
-  background-color: #696e7c;
-  padding: 0.4rem 0.6rem;
-  max-width: 75%;
-  border-radius: 0px 5px 5px 0px;
-}
-.chat-section .msg-wrapper .incoming .receiver .receiver-name {
-  font-size: 1.3rem;
-  display: block;
-  text-align: right;
-  word-break: break-all;
-}
-.chat-section .msg-wrapper .incoming .receiver .receiver-msg {
-  font-size: 1.6rem;
-  word-break: break-all;
-}
-.chat-section .form-input {
-  background-color: white;
-  padding: 0 1.2rem;
-  display: flex;
-  align-items: center;
-}
-.chat-section .form-input .message {
-  flex-grow: 1;
-  font-size: 2rem;
-  border: none;
-  outline: none;
-  padding-right: 1.2rem;
-}
-.chat-section .form-input .send-btn {
-  font-size: 1.8rem;
-  border: 2px solid #21252c;
-  background-color: #21252c;
-  color: white;
-  padding: 0.4rem 1.2rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-.chat-section .form-input .send-btn:hover {
-  background-color: transparent;
-  color: black;
+	display: grid;
+	grid-template-columns: 30% 70%;
+	grid-template-rows: 88vh;
+	margin-top: 1rem;
 }
 
-.active {
-  display: none;
+.chat-name {
+	background-color: #90e0ef;
+	width: 90%;
+	height: 100%;
+	margin: 0 auto;
+	border-radius: 4px;
+	padding: 0.5rem 0.8rem;
 }
 
-@media (max-width: 650px) {
-  body {
-    background-color: #3e4452;
-  }
-  .join-section {
-    width: 90%;
-  }
-  .join-section h1 {
-    margin-bottom: 3rem;
-  }
-  .join-section label {
-    text-align: center;
-  }
-  .join-section .username {
-    text-align: center;
-  }
-  .join-section .join-btn {
-    margin-top: 1rem;
-  }
-  .chat-section {
-    width: 100%;
-    margin: 0 0;
-    border-left: none;
-    border-right: none;
-  }
-}/*# sourceMappingURL=style.css.map */
+.chat-name .user-info {
+	width: 100%;
+	padding: 0.6rem 0.5rem;
+	border-radius: 4px;
+	background-color: #caf0f8;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.chat-name .user-info span {
+	color: #03045e;
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+.chat-name .user-info .logout-btn {
+	cursor: pointer;
+	border: none;
+	border-radius: 4px;
+	padding: 0.4rem 0.7rem;
+	font-size: 0.9rem;
+	background-color: rgb(218, 3, 3);
+	color: white;
+	transition: all 0.3s ease-in-out;
+}
+
+.chat-name .user-info .logout-btn:hover {
+	background-color: rgb(150, 3, 3);
+	color: white;
+}
+
+.chat-name .online-users {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	height: calc(100% - (40px + 30px));
+	overflow-y: auto;
+}
+
+.chat-name .online-users .show-online-user {
+	width: 100%;
+	font-size: 1.2rem;
+	text-align: center;
+	padding: 0.4rem 0;
+	border-radius: 4px;
+	color: #03045e;
+	background-color: #caf0f8;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+}
+.chat-name .online-users .show-online-user:hover {
+	background-color: #00b4d8;
+	color: #03045e;
+}
+
+.chat-area {
+	margin-right: 1rem;
+	border-radius: 4px;
+	background-color: #90e0ef;
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 8% calc(100% - 15%) 7%;
+}
+
+.chat-area .others-username {
+	background-color: #03045e;
+	display: flex;
+	align-items: center;
+	padding-left: 1rem;
+	color: #caf0f8;
+	letter-spacing: 0.02rem;
+	border-radius: 4px 4px 0 0;
+}
+
+.chat-area .user-info {
+	display: none;
+}
+
+.chat-area .msg-container {
+	padding: 0.5rem 0;
+	overflow-y: auto;
+	border: 2px solid #90e0ef;
+}
+
+.chat-area .msg-container .outgoing-msg {
+	display: flex;
+	justify-content: end;
+	margin-bottom: 0.5rem;
+}
+
+.chat-area .msg-container .outgoing-msg .sender {
+	max-width: 70%;
+	background-color: #caf0f8;
+	border-radius: 4px 0 0 4px;
+	padding: 0.2rem 0;
+	padding-left: 0.5rem;
+	padding-right: 0.2rem;
+}
+
+.chat-area .msg-container .outgoing-msg .sender .sender-name {
+	font-size: 0.8rem;
+	font-weight: bold;
+	color: #03045e;
+	word-break: break-all;
+}
+
+.chat-area .msg-container .update-user {
+	font-size: 0.9rem;
+	font-style: italic;
+	text-align: center;
+	color: #caf0f8;
+	width: max-content;
+	margin: 0.2rem auto;
+	padding: 0.1rem 0.7rem;
+	border-radius: 4px;
+}
+
+.chat-area .msg-container .incoming-msg {
+	display: flex;
+	justify-content: start;
+	margin-bottom: 0.5rem;
+}
+
+.chat-area .msg-container .incoming-msg .receiver {
+	max-width: 70%;
+	background-color: #00b4d8;
+	border-radius: 0 4px 4px 0;
+	padding: 0.2rem 0;
+	padding-right: 0.5rem;
+	padding-left: 0.2rem;
+}
+
+.chat-area .msg-container .incoming-msg .receiver .receiver-name {
+	font-size: 0.8rem;
+	font-weight: bold;
+	color: #03045e;
+	word-break: break-all;
+}
+
+.chat-area .form {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.chat-area .form .message {
+	flex-grow: 1;
+	height: 100%;
+	font-size: 1.3rem;
+	padding: 0 0.5rem;
+	border-radius: 0 0 0 4px;
+	border: none;
+	outline: none;
+}
+
+.chat-area .form .msg-send-btn {
+	height: 100%;
+	padding: 0 1rem;
+	font-size: 1.2rem;
+	border-radius: 0 0 4px 0;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	background-color: #00b4d8;
+	color: #03045e;
+	transition: all 0.3s ease-in-out;
+}
+.chat-area .form .msg-send-btn:hover {
+	background-color: #03045e;
+	color: #caf0f8;
+}
+
+@media (max-width: 450px) {
+	.header {
+		padding: 0.5rem 0.6rem;
+	}
+
+	.header .logo {
+		font-size: 1.2rem;
+	}
+
+	.chat-section {
+		grid-template-columns: 100%;
+		grid-template-rows: 93vh;
+		margin-top: 0;
+	}
+
+	.chat-name {
+		display: none;
+	}
+
+	.chat-area {
+		grid-template-rows: 8% calc(100% - 15%) 7%;
+		margin-right: 0;
+	}
+
+	.chat-area .others-username {
+		display: none;
+	}
+
+	.chat-area .user-info {
+		display: none;
+	}
+
+	.chat-area .user-info {
+		width: 100%;
+		padding: 0 0.5rem;
+		background-color: #03045e;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.chat-area .user-info span {
+		color: #caf0f8;
+		font-size: 1.1rem;
+		font-weight: bold;
+	}
+
+	.chat-area .user-info .logout-btn {
+		cursor: pointer;
+		border: none;
+		border-radius: 4px;
+		padding: 0.4rem 0.7rem;
+		font-size: 0.9rem;
+		background-color: rgb(218, 3, 3);
+		color: white;
+		transition: all 0.3s ease-in-out;
+	}
+
+	.chat-area .user-info .logout-btn:hover {
+		background-color: rgb(150, 3, 3);
+		color: white;
+	}
+
+	.chat-area .msg-container .outgoing-msg {
+		margin-bottom: 0.4rem;
+	}
+
+	.chat-area .msg-container .outgoing-msg .sender .sender-name {
+		font-size: 0.8rem;
+	}
+
+	.chat-area .msg-container .update-user {
+		font-size: 0.8rem;
+	}
+
+	.chat-area .msg-container .incoming-msg .receiver .receiver-name {
+		font-size: 0.8rem;
+	}
+}

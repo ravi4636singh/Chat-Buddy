@@ -1,32 +1,49 @@
-const express = require('express')
-const http = require('http')
-const path = require('path')
-const { Server } = require('socket.io')
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const ejs = require('ejs');
+const { Server } = require('socket.io');
 
-const app = express()
-const server = http.createServer(app)
-const io = new Server(server)
+const app = express();
+const server = http.createServer(app);
+const PORT = 8080;
+const io = new Server(server);
 
-app.use(express.static(path.join(__dirname, '/public/')))
+server.listen(PORT, () =>
+	console.log(`Server Start: http://localhost:${PORT}`)
+);
+
+app.use(express.static(path.join(__dirname, '/public/')));
+
+app.set('view engine', 'ejs');
+app.set('views', './public');
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html')
-})
+	res.render('loginPage');
+});
 
-io.on('connection', (socket) => {
-    socket.on('new message', (msgInfo) => {
-        socket.broadcast.emit('new message', msgInfo)
-    })
+app.get('/login/:username', (req, res) => {
+	res.status(200).end();
+});
 
-    socket.on('join user', (uname) => {
-        socket.broadcast.emit('connected', uname)
-    })
+app.get('/login', (req, res) => {
+	res.render('loginPage');
+});
 
-    socket.on('exit user', (uname) => {
-        socket.broadcast.emit('disconnected', uname)
-    })
-})
+app.get('/chat', (req, res) => {
+	io.on('connection', (socket) => {
+		socket.on('join', (username) => {
+			socket.broadcast.emit('connected', username);
+		});
 
-server.listen(5000, () => {
-    console.log('http://localhost:5000')
-})
+		socket.on('exit', (username) => {
+			socket.broadcast.emit('disconnected', username);
+		});
+
+		socket.on('message', (msgInfo) => {
+			socket.broadcast.emit('message', msgInfo);
+		});
+	});
+
+	res.render('index');
+});
